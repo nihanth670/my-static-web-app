@@ -3,17 +3,19 @@ name: Deploy Static Web App via Marketplace
 on:
   push:
     branches:
-      - main
+      - main 
 
 jobs:
   deploy-static-site:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+    - name: Checkout Code
+      uses: actions/checkout@v4
 
-      - name: Log in to Azure and Upload
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az storage blob upload-batch --account-name nihanthstorageaccount --connection-string "${{ secrets.AZURE_CONNECTION_STRING }}" --source ./Baristahtml --destination '$web' --overwrite true
+    - name: Deploy to Azure Storage
+      uses: bacongobbler/azure-blob-storage-upload@v3.0.0
+      with:
+        source_dir: './Baristahtml'                     
+        container_name: '$web'              
+        connection_string: ${{ secrets.AZURE_CONNECTION_STRING }}
+        sync: true
