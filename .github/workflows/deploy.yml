@@ -17,5 +17,5 @@ jobs:
       with:
         source_dir: './Baristahtml'                     
         container_name: '$web'              
-        connection_string: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+        connection_string: ${{ secrets.AZURE_CONNECTION_STRING }}
         sync: true
